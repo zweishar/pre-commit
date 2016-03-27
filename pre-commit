@@ -1,11 +1,15 @@
 #!/bin/bash
 
+Red='\e[0;31m';
+
 git diff --cached --name-only | while read FILE; do
 if [[ "$FILE" =~ ^.+(php|inc|module|install|test)$ ]]; then
-    RESULT=$(grep "dpm(" "$FILE")
+    RESULT=$(grep -nre "dpm(" "$FILE")
     if [ ! -z $RESULT ]; then
       exec < /dev/tty
-      printf "Your commit contains a call to dpm. Do you want to continue? [Yy/nN]"
+      echo "Your commit contains a call to dpm here:" 
+      echo $RESULT
+      printf "Do you want to continue? [Yy/nN]"
       read REPLY
       if [[ ! $REPLY =~ ^[Yy]$ ]]
         then
