@@ -1,7 +1,5 @@
 #!/bin/bash
 
-Red='\e[0;31m';
-
 git diff --cached --name-only | while read FILE; do
 if [[ "$FILE" =~ ^.+(php|inc|module|install|test)$ ]]; then
     RESULT=$(grep -nre "dpm(" "$FILE")
